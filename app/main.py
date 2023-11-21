@@ -1,4 +1,5 @@
 from flask import Flask, json, jsonify
+from flask_httpauth import HTTPBasicAuth
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import check_password_hash
 
