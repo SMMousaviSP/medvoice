@@ -56,11 +56,6 @@ def auth_error(status):
     }), status
 
 
-@app.route("/", methods=["GET"])
-def hello_world():
-    return jsonify({"message": "Hello, World!"}), 200
-
-
 @app.route('/audio', methods=['POST'])
 @auth.login_required
 @swag_from('specs/post_audio.yml')
