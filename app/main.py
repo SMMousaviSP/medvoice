@@ -1,8 +1,20 @@
 from flask import Flask, json, jsonify
 from werkzeug.exceptions import HTTPException
+from werkzeug.security import check_password_hash
+
+from config_local import USERS
 
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify_password(username, password):
+    """Verify the password for the username provided."""
+    if username in USERS and \
+            check_password_hash(USERS.get(username), password):
+        return username
 
 
 @app.errorhandler(HTTPException)
