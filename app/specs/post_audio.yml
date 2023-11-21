@@ -1,0 +1,69 @@
+tags:
+  - Audio
+summary: Upload an audio file.
+description: >
+  This endpoint allows users to upload an audio file. The file must be in WAV format.
+  Basic authentication is required.
+security:
+  - basicAuth: []
+consumes:
+  - multipart/form-data
+produces:
+  - application/json
+parameters:
+  - in: formData
+    name: file
+    type: file
+    required: true
+    description: The audio file to upload.
+responses:
+  '201':
+    description: Audio file successfully uploaded.
+    schema:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 201
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the uploaded file.
+              example: "12345abcde"
+        errors:
+          type: array
+          items:
+            type: string
+            example: []
+  '400':
+    description: Bad request due to various possible errors.
+    schema:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        data:
+          type: object
+        errors:
+          type: array
+          items:
+            type: string
+            example: ["No file part", "No selected file", "Invalid WAV file", "Invalid file extension"]
+  '401':
+    description: Unauthorized due to invalid credentials.
+    schema:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 401
+        data:
+          type: object
+        errors:
+          type: array
+          items:
+            type: string
+            example: ["Invalid credentials"]
