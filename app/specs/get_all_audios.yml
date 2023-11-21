@@ -1,0 +1,71 @@
+tags:
+  - Audio
+summary: Retrieve all audio files
+description: >
+  This endpoint retrieves all audio files stored in the service. It requires
+  HTTP Basic Authentication.
+produces:
+  - application/json
+responses:
+  '200':
+    description: Successful retrieval of audio files
+    schema:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        data:
+          type: object
+          additionalProperties:
+            $ref: '#/definitions/Audio'
+        errors:
+          type: array
+          items:
+            type: string
+    examples:
+      application/json: 
+        code: 200
+        data: 
+          1: 
+            content: "Base64Encoded=="
+            owner: "user1"
+            filename: "audio1.wav"
+          2: 
+            content: "Base64Encoded=="
+            owner: "user2"
+            filename: "audio2.wav"
+        errors: []
+  '401':
+    description: Unauthorized access due to invalid credentials
+    schema:
+      $ref: '#/definitions/Error'
+    examples:
+      application/json: 
+        code: 401
+        data: {}
+        errors:
+          - Invalid credentials
+security:
+  - basicAuth: []
+definitions:
+  Audio:
+    type: object
+    properties:
+      content:
+        type: string
+      owner:
+        type: string
+      filename:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      errors:
+        type: array
+        items:
+          type: string

@@ -109,5 +109,17 @@ def post_audio():
     }), 400
 
 
+@app.route('/audio', methods=['GET'])
+@auth.login_required
+@swag_from('specs/get_all_audios.yml')
+def get_audios():
+    """Get all audio files."""
+    return jsonify({
+        'code': 200,
+        'data': audio_library.data,
+        'errors': []
+    }), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
