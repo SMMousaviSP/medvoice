@@ -10,4 +10,7 @@ USERS = {
     # the hash directly in the config file.
     # "username": "hashed password",
     "admin": generate_password_hash("admin"),
+    # This is required for the tests to pass. If changed, provide a valid
+    # username and password in the `test.py` file.
+    "test": generate_password_hash("test"),
 }
