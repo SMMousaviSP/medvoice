@@ -1,0 +1,13 @@
+# Use this file as a template for `config_local.py`. This file will be ignored
+# by git, so you can safely store sensitive information.
+
+from werkzeug.security import generate_password_hash
+
+
+USERS = {
+    # The password should be hashed separately and only the hash should be
+    # stored in the config file. For demonstration purposes, we're storing
+    # the hash directly in the config file.
+    # "username": "hashed password",
+    "admin": generate_password_hash("admin"),
+}
