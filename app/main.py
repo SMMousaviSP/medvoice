@@ -24,7 +24,6 @@ swagger = Swagger(app)
 audio_library = AudioLibrary()
 
 
-# TODO: If password is incorrect, the error should be returned as json
 @auth.verify_password
 def verify_password(username, password):
     """Verify the password for the username provided."""
@@ -46,6 +45,15 @@ def handle_exception(e):
     })
     response.content_type = "application/json"
     return response
+
+
+@auth.error_handler
+def auth_error(status):
+    return jsonify({
+        'code': status,
+        'data': {},
+        'errors': ['Invalid credentials']
+    }), status
 
 
 @app.route("/", methods=["GET"])
