@@ -1,4 +1,4 @@
-class AudioFiles:
+class AudioLibrary:
     """Class to manage audio files with unique IDs."""
 
     def __init__(self) -> None:
