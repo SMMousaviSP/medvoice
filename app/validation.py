@@ -1,3 +1,5 @@
+"""Validation functions for the app."""
+
 import wave
 
 
@@ -8,7 +10,7 @@ def allowed_file(filename):
 def is_valid_wav(file_stream):
     """Check if the file is a valid WAV file."""
     try:
-        with wave.open(file_stream) as audio:
+        with wave.open(file_stream) as _:
             return True
     except wave.Error:
         return False

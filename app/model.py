@@ -1,3 +1,5 @@
+"""Model classes for the audio library."""
+
 class AudioLibrary:
     """Class to manage audio files with unique IDs."""
 
@@ -10,20 +12,20 @@ class AudioLibrary:
         if not all([content, owner, filename]):
             raise ValueError("Content, owner, and filename must be provided.")
 
-        id = next(self.__id_counter)
-        self.data[id] = {
+        audio_id = next(self.__id_counter)
+        self.data[audio_id] = {
             'content': content,
             'owner': owner,
             'filename': filename
         }
-        return id
-    
-    def __getitem__(self, id: int) -> dict:
+        return audio_id
+
+    def __getitem__(self, audio_id: int) -> dict:
         """Retrieve an audio file's information by its ID."""
         try:
-            return self.data[id]
-        except KeyError:
-            raise KeyError(f"Audio file with ID {id} does not exist.")
+            return self.data[audio_id]
+        except KeyError as e:
+            raise KeyError(f"Audio file with ID {audio_id} does not exist.") from e
 
     def __count_from_one(self) -> int:
         """Private generator method to create unique IDs starting from 1."""

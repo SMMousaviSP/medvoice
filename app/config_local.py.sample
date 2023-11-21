@@ -1,3 +1,4 @@
+"""Local configuration sample."""
 # Use this file as a template for `config_local.py`. This file will be ignored
 # by git, so you can safely store sensitive information.
 

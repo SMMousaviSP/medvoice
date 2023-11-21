@@ -1,7 +1,9 @@
+"""Main module for the Audio Storage Service."""
+
 import io
 import base64
 
-from flask import Flask, json, jsonify, request, abort
+from flask import Flask, json, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import check_password_hash
@@ -30,6 +32,7 @@ def verify_password(username, password):
     if username in USERS and \
             check_password_hash(USERS.get(username), password):
         return username
+    return None
 
 
 @app.errorhandler(HTTPException)
@@ -49,6 +52,7 @@ def handle_exception(e):
 
 @auth.error_handler
 def auth_error(status):
+    """Return JSON instead of HTML for authentication errors."""
     return jsonify({
         'code': status,
         'data': {},
@@ -82,7 +86,11 @@ def post_audio():
         if is_valid_wav(file_stream):
             file_stream.seek(0)  # Reset file pointer to the beginning
             encoded_content = base64.b64encode(file_stream.read()).decode()
-            file_id = audio_library.add(encoded_content, auth.current_user(), secure_filename(file.filename))
+            file_id = audio_library.add(
+                encoded_content,
+                auth.current_user(),
+                secure_filename(file.filename)
+            )
             return jsonify({
                 'code': 201,
                 'data': {
@@ -90,12 +98,11 @@ def post_audio():
                 },
                 'errors': []
             }), 201
-        else:
-            return jsonify({
-                'code': 400,
-                'data': {},
-                'errors': ['Invalid WAV file']
-            }), 400
+        return jsonify({
+            'code': 400,
+            'data': {},
+            'errors': ['Invalid WAV file']
+        }), 400
 
     return jsonify({
         'code': 400,
