@@ -18,6 +18,13 @@ class AudioLibrary:
         }
         return id
     
+    def __getitem__(self, id: int) -> dict:
+        """Retrieve an audio file's information by its ID."""
+        try:
+            return self.data[id]
+        except KeyError:
+            raise KeyError(f"Audio file with ID {id} does not exist.")
+
     def __count_from_one(self) -> int:
         """Private generator method to create unique IDs starting from 1."""
         n = 1
